@@ -4,7 +4,7 @@ public class GetPostServiceTests {
 
     @Test
     public void test() {
-
+        
     }
 
 }

@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channel;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -27,21 +28,25 @@ public class GetPostService {
     private String storedValue = "--";
     private final ByteBuffer channelBuffer = ByteBuffer.allocate(256);;
 
-    public static GetPostService createNew() {
-        return new GetPostService();
+    /**
+     * Creates new service with specified channel
+     * @param c non-null channel
+     * @return new GetPostService
+     */
+    public static GetPostService createNew(SelectableChannel c) {
+        return new GetPostService(c);
     }
 
-    private GetPostService() { }
+    private GetPostService(SelectableChannel c) {
+        this.channel = c;
+    }
 
     private Selector selector;
-    private ServerSocketChannel serverSocketChannel;
+    private final SelectableChannel channel;
 
-    public void startup(int port) throws IOException {
-        serverSocketChannel = ServerSocketChannel.open();
-        serverSocketChannel.socket().bind(new InetSocketAddress(port));
+    public void startup() throws IOException {
         selector = Selector.open();
-        serverSocketChannel.configureBlocking(false);
-        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+        channel.register(selector, SelectionKey.OP_ACCEPT);
         ExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.submit(this::mainLoop);
     }
@@ -52,9 +57,8 @@ public class GetPostService {
             for (SelectionKey key :
                     selectionKeys) {
                 if (key.isAcceptable()) {
-                    assert serverSocketChannel != null;
                     try {
-                        serverSocketChannel.register(selector, SelectionKey.OP_READ);
+                        channel.register(selector, SelectionKey.OP_READ);
                     } catch (IOException e) {
                         e.printStackTrace();
                         return;
