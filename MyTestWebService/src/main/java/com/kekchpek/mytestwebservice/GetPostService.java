@@ -113,7 +113,7 @@ public class GetPostService {
         if (c instanceof WritableByteChannel) {
             try {
                 WritableByteChannel channel = (WritableByteChannel) c;
-                channelBuffer.put(storedValue.getBytes());
+                channelBuffer.put(message.getBytes());
                 channel.write(channelBuffer);
             } catch (IOException e) {
                 e.printStackTrace();
