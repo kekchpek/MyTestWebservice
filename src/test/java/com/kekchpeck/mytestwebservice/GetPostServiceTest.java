@@ -1,3 +1,5 @@
+package com.kekchpeck.mytestwebservice;
+
 import com.kekchpek.mytestwebservice.GetPostService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,7 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.channels.SelectableChannel;
 
-public class GetPostServiceTests {
+public class GetPostServiceTest {
 
     @Test
     public void testStartup1() throws IOException, NoSuchFieldException, IllegalAccessException {
