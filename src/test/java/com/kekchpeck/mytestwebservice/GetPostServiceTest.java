@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.channels.SelectableChannel;
 
-public class GetPostServiceTests {
+public class GetPostServiceTest {
 
     @Test
     public void testStartup1() throws IOException, NoSuchFieldException, IllegalAccessException {
@@ -20,7 +20,6 @@ public class GetPostServiceTests {
         field.setAccessible(true);
         Object selector = field.get(service);
         Assert.assertNotNull(selector);
-        Assert.assertNotNull(null);
     }
 
 }
