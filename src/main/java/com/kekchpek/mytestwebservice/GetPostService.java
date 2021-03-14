@@ -52,8 +52,10 @@ public class GetPostService {
     }
 
     private void mainLoop() {
+        System.out.printf("%s is started up%n", getClass().getSimpleName());
         while (true) {
             Set<SelectionKey> selectionKeys = selectKeys();
+            System.out.printf("Selected keys are received%n");
             for (SelectionKey key :
                     selectionKeys) {
                 if (key.isAcceptable()) {
