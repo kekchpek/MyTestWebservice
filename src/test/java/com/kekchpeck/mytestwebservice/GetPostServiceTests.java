@@ -1,3 +1,5 @@
+package com.kekchpeck.mytestwebservice;
+
 import com.kekchpek.mytestwebservice.GetPostService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,6 +20,7 @@ public class GetPostServiceTests {
         field.setAccessible(true);
         Object selector = field.get(service);
         Assert.assertNotNull(selector);
+        Assert.assertNotNull(null);
     }
 
 }
